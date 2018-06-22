@@ -1,0 +1,17 @@
+
+public interface ApiInterface {
+    @POST("addclient")
+    @FormUrlEncoded
+    Call<User> savePost(@Field("Name") String Name,
+                        @Field("Email") String Email,
+                        @Field("Password") String password,
+                        @Field("Mobile") String mobile,
+                        @Field("CountryCode") String CountryCode,
+                        @Field("NotificationToken") String NotificationToken);
+
+    @POST("login")
+    @FormUrlEncoded
+    Call<User> login(   @Field("Password") String password,
+                        @Field("Mobile") String mobile
+                       );
+}
