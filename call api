@@ -1,0 +1,32 @@
+ private void callApi() {
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<ClientData> call = apiService.savePost("18");
+        call.enqueue(new Callback<ClientData>() {
+            @Override
+            public void onResponse(Call<ClientData> call, Response<ClientData> response) {
+                String s =response.body().getMessage();
+                Toast.makeText(MainActivity.this,s,Toast.LENGTH_LONG).show();
+                int status=response.body().getStatus();
+
+                if (status==1)
+                {
+                    ClientData clientData= (ClientData) response.body();
+                    List<GrapeVinerList> mlist=clientData.getGrapeVinerList();
+
+                  // define an adapter
+                   fillList(mlist);
+
+                }else {
+                    Toast.makeText(MainActivity.this,"invelid",Toast.LENGTH_LONG).show();
+
+                }
+            }
+            @Override
+            public void onFailure(Call<ClientData> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
